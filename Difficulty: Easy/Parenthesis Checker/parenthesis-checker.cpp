@@ -1,42 +1,24 @@
-//{ Driver Code Starts
-#include <bits/stdc++.h>
-using namespace std;
-
-
-// } Driver Code Ends
 
 class Solution {
   public:
-    bool isBalanced(string& s) {
-        stack<char>st;
-        for(int i=0;i<s.size();i++){
-            if(s[i]=='(' || s[i]=='[' || s[i]=='{') st.push(s[i]);
-            else{
-                if(!st.empty() && ((st.top()=='(' && s[i]==')') || (st.top()=='[' && s[i]==']')||
-                (st.top()=='{' && s[i]=='}'))) st.pop();
-                else return false;
+    bool isBalanced(string& k) {
+        // code here
+        stack<char> stack;
+        unordered_map<char, char> matching = {
+            {')','('},
+            {']','['},
+            {'}','{'}
+        };
+        for(char c : k){
+            if(matching.count(c)){
+                if(stack.empty() || stack.top() != matching[c]){
+                    return false;
+                }
+                stack.pop();
+            }else{
+                stack.push(c);
             }
         }
-        return st.empty();
+        return stack.empty();
     }
 };
-
-//{ Driver Code Starts.
-
-int main() {
-    int t;
-    string a;
-    cin >> t;
-    while (t--) {
-        cin >> a;
-        Solution obj;
-        if (obj.isBalanced(a))
-            cout << "true" << endl;
-        else
-            cout << "false" << endl;
-
-        cout << "~"
-             << "\n";
-    }
-}
-// } Driver Code Ends
