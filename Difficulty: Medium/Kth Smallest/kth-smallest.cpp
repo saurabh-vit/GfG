@@ -6,15 +6,13 @@ class Solution {
     // k : find kth smallest element and return using this function
     int kthSmallest(vector<int> &arr, int k) {
         // code here
-        // priority_queue<int, vector<int>, greater<int>> minHeap;
-        // for (int num : arr) {
-        //     minHeap.push(num);
-        // }
-        // for (int i = 0; i < k - 1; ++i) {
-        //     minHeap.pop();
-        // }
-        // return minHeap.top();
-        sort(arr.begin(), arr.end());
-        return arr[k-1];
+        priority_queue<int> maxheap;
+        for(int i = 0; i<arr.size(); i++){
+            maxheap.push(arr[i]);
+            if(maxheap.size()>k){
+                maxheap.pop();
+            }
+        }
+        return maxheap.top();
     }
 };
