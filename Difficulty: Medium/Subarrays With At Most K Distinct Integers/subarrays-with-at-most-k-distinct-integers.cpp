@@ -3,19 +3,22 @@ class Solution {
     int countAtMostK(vector<int> &arr, int k) {
         // code here
         int n = arr.size();
-        int count = 0, left = 0;
         unordered_map<int, int> freq;
-        for(int i = 0; i<n; i++){
-            freq[arr[i]]++;
-            while(freq.size()>k){
+        int left = 0;
+        long long ans = 0;
+
+        for (int right = 0; right < n; right++) {
+            freq[arr[right]]++;
+            while (freq.size() > k) {
                 freq[arr[left]]--;
-                if(freq[arr[left]]==0){
+                if (freq[arr[left]] == 0) {
                     freq.erase(arr[left]);
                 }
                 left++;
             }
-            count += (i-left+1);
+            ans += (right - left + 1);
         }
-        return count;
+
+        return ans;
     }
 };
