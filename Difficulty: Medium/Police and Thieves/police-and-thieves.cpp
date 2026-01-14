@@ -1,30 +1,33 @@
 class Solution {
-  public:
+public:
     int catchThieves(vector<char> &arr, int k) {
-        // Code here
-        int n = arr.size();
-        int count = 0;
-        vector<int> police;
-        vector<int> thief;
-        for(int i = 0; i<n; i++){
-            if(arr[i]=='P'){
-                police.push_back(i);
-            }else{
-                thief.push_back(i);
-            }
+        int n = arr.size();   // FIX: define n here
+        
+        vector<int> police, thief;
+        
+        // Store positions
+        for(int i = 0; i < n; i++) {
+            if(arr[i] == 'P') police.push_back(i);
+            else if(arr[i] == 'T') thief.push_back(i);
         }
-        int i = 0, j = 0;
-        while(i<police.size() && j<thief.size()){
-            if(abs(police[i]-thief[j])<=k){
+        
+        int i = 0, j = 0, count = 0;
+        
+        // Two pointer approach
+        while(i < police.size() && j < thief.size()) {
+            if(abs(police[i] - thief[j]) <= k) {
                 count++;
                 i++;
                 j++;
-            }else if(thief[j]<police[i]){
-                j++;
-            }else{
+            }
+            else if(police[i] < thief[j]) {
                 i++;
             }
+            else {
+                j++;
+            }
         }
+        
         return count;
     }
 };
