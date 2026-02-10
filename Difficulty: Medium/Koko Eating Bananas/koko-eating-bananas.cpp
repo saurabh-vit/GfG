@@ -1,23 +1,25 @@
 class Solution {
   public:
     int kokoEat(vector<int>& arr, int k) {
-        // Code here
-        int left = 1, right = *max_element(arr.begin(), arr.end());
-        auto canFinish = [&](int speed) {
-            int hours = 0;
+        int low = 1;
+        int high = *max_element(arr.begin(), arr.end());
+        int ans = high;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            long long hours = 0;
+
             for (int bananas : arr) {
-                hours += (bananas + speed - 1) / speed;  // ceil(bananas / speed)
+                hours += (bananas + mid - 1) / mid; // ceil division
             }
-            return hours <= k;
-        };
-        while (left < right) {
-            int mid = (left + right) / 2;
-            if (canFinish(mid)) {
-                right = mid;  // try smaller speed
+
+            if (hours <= k) {
+                ans = mid;        // valid speed
+                high = mid - 1;   // try smaller
             } else {
-                left = mid + 1;  // need more speed
+                low = mid + 1;    // need faster speed
             }
         }
-        return left;
+        return ans;
     }
 };
