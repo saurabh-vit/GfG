@@ -3,19 +3,20 @@ class Solution {
     int totalElements(vector<int> &arr) {
         // code here
         int n = arr.size();
-        unordered_map<int, int> count;
-        int maxlen = 0, l = 0;
+        unordered_map<int, int> freq;
+        int j = 0;
+        int ans = 0;
         for(int i = 0; i<n; i++){
-            count[arr[i]]++;
-            while(count.size()>2){
-                count[arr[l]]--;
-                if(count[arr[l]]==0){
-                    count.erase(arr[l]);
+            freq[arr[i]]++;
+            while(freq.size()>2){
+                freq[arr[j]]--;
+                if(freq[arr[j]]==0){
+                    freq.erase(arr[j]);
                 }
-                l++;
+                j++;
             }
-            maxlen = max(maxlen, i-l+1);
+            ans = max(ans, i-j+1);
         }
-        return maxlen;
+        return ans;
     }
 };
