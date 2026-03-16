@@ -1,0 +1,36 @@
+class Solution {
+  public:
+    
+    int dfs(Node* root, long long currSum, int k, unordered_map<long long,int> &mp) {
+        if(root == NULL) return 0;
+        
+        currSum += root->data;
+        
+        int count = 0;
+        
+        // Check if there exists a prefix sum that forms k
+        if(mp.find(currSum - k) != mp.end())
+            count += mp[currSum - k];
+        
+        // Store current prefix sum
+        mp[currSum]++;
+        
+        // Traverse children
+        count += dfs(root->left, currSum, k, mp);
+        count += dfs(root->right, currSum, k, mp);
+        
+        // Backtrack
+        mp[currSum]--;
+        
+        return count;
+    }
+    
+    int countAllPaths(Node *root, int k) {
+        unordered_map<long long,int> mp;
+        
+        // Base prefix sum
+        mp[0] = 1;
+        
+        return dfs(root, 0, k, mp);
+    }
+};
