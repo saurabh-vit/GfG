@@ -1,0 +1,15 @@
+class Solution {
+  public:
+    string removeSpaces(string& s) {
+        // code here
+        string result = "";
+        
+        for(char c : s) {
+            if(c != ' ') {
+                result += c;
+            }
+        }
+        
+        return result;
+    }
+};
